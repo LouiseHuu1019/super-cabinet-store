@@ -15,17 +15,18 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.yaobin.Yaobinbusinessbackend.bean.User;
-import com.yaobin.Yaobinbusinessbackend.dao.UserDao;
-import com.yaobin.Yaobinbusinessbackend.http.Response;
-import com.yaobin.Yaobinbusinessbackend.service.UserService;
+import com.backend.supercabinetstore.bean.User;
+import com.backend.supercabinetstore.dao.UserDao;
+import com.backend.supercabinetstore.http.Response;
+import com.backend.supercabinetstore.service.UserService;
+
 
 @RestController()
 @RequestMapping("/users")
-public class AdminController {
+public class UserController {
 	
 	@Autowired
-	AdminDao userDao;
+	UserDao userDao;
 	
 	@Autowired
 	UserService userService;
@@ -42,6 +43,12 @@ public class AdminController {
 	@PostMapping
 	public Response addUser(@RequestBody User user) {
 		return userService.register(user);
+	}
+	
+	@PreAuthorize("hasAnyAuthority('ROLE_ADMIN', 'ROLE_USER')")
+	@PutMapping
+	public Response changeUser(@RequestBody User user, Authentication authentication) {
+		return userService.changePassword(user, authentication);
 	}
 	
 	@DeleteMapping("/{id}")

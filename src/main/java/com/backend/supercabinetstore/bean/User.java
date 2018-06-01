@@ -1,12 +1,18 @@
 package com.backend.supercabinetstore.bean;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -14,35 +20,23 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-@Table(name = "admin_user")
-public class Admin implements UserDetails {
+@Table(name = "supercabinet_user")
+public class User implements UserDetails {
 
 	private static final long serialVersionUID = 1L;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ")
-	@SequenceGenerator(name = "SEQ", sequenceName = "ADMIN_USER_SEQ")
+	@SequenceGenerator(name = "SEQ", sequenceName = "supercabinet_USER_SEQ")
 	private int id;
 	@Column(name = "username", unique = true, nullable = false)
 	private String username;
 	@Column(name = "password", nullable = false)
 	private String password;
-	
-	@Override
-	public String toString() {
-		return "Admin [id=" + id + ", username=" + username + ", password=" + password + "]";
-	}
-
-	public Admin() {
-		super();
-	}
-
-	public Admin(int id, String username, String password) {
-		super();
-		this.id = id;
-		this.username = username;
-		this.password = password;
-	}
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "s_user_s_user_profile", joinColumns = {
+			@JoinColumn(name = "user_id", referencedColumnName = "id") }, inverseJoinColumns = {
+					@JoinColumn(name = "user_profile_id", referencedColumnName = "id") })
+	private List<UserProfile> profiles = new ArrayList<UserProfile>();
 
 	public int getId() {
 		return id;
@@ -52,57 +46,59 @@ public class Admin implements UserDetails {
 		this.id = id;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	@Override
+	public String getUsername() {
+		return username;
 	}
 
 	public void setUsername(String username) {
 		this.username = username;
 	}
 
+	@Override
+	public String getPassword() {
+		return password;
+	}
+
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
+	public List<UserProfile> getProfiles() {
+		return profiles;
+	}
+
+	public void setProfiles(List<UserProfile> profiles) {
+		this.profiles = profiles;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", username=" + username + ", password=" + password + ", profiles=" + profiles + "]";
+	}
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+		return profiles;
 	}
 
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 

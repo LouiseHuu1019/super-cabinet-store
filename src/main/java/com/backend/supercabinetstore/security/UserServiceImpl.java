@@ -6,18 +6,18 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.backend.supercabinetstore.bean.Admin;
-import com.backend.supercabinetstore.dao.AdminDao;
+import com.backend.supercabinetstore.bean.User;
+import com.backend.supercabinetstore.dao.UserDao;
 
 @Service
 public class UserServiceImpl implements UserDetailsService {
 	
 	@Autowired
-	AdminDao adminDao;
+	UserDao userDao;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Admin user = adminDao.findByUsername(username);
+		User user = userDao.findByUsername(username);
 		if(user == null) {
 			throw new UsernameNotFoundException("User " + username + " was not found in the database");
 		}
