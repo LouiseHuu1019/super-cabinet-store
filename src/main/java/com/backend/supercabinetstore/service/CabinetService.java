@@ -35,6 +35,10 @@ public class CabinetService {
 	public List<Cabinets> getCabinetsList() {
 		return cabinetDao.findAll();
 	}
+	
+	public Cabinets getOneCab(String cab_name) {
+		return null;
+	}
 
 	public Response addCabinet(Cabinets cabinet) {
 		cabinet.setOdate(new Timestamp(System.currentTimeMillis()));

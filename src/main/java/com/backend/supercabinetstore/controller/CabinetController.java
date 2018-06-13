@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBuilder;
-
 import com.backend.supercabinetstore.bean.Cabinets;
 import com.backend.supercabinetstore.dao.CabinetDao;
 import com.backend.supercabinetstore.http.Response;
@@ -41,6 +40,11 @@ public class CabinetController {
 		return cabinetService.getCabinetsList();
 	}
 	
+	@GetMapping("/cabinets/{id}")
+	public Cabinets getOneCab(@PathVariable int id) {
+		return cabinetDao.findOne(id);
+	}
+	
 	@GetMapping("/getallfiles")
 	public ResponseEntity<List<String>> getListFiles(Model model) {
 		
@@ -58,9 +62,35 @@ public class CabinetController {
 		return ResponseEntity.ok().body(fileNames);
 	}
 
+	//get one pic
+//	@GetMapping("/getOnePic/{filename:.+}")
+//	public ResponseEntity<List<String>> getOnePic(Model model) {
+//		
+//		List<String> results = new ArrayList<String>();
+////		String pic = new File("cabinets/).getName();
+//		results.add(pic);
+//		
+//		List<String> fileNames = results
+//				.stream().map(fileName -> MvcUriComponentsBuilder
+//						.fromMethodName(CabinetController.class, "getPic", fileName).build().toString())
+//				.collect(Collectors.toList());
+//
+//		return ResponseEntity.ok().body(fileNames);
+//	}
+	
 	@GetMapping("/files/{filename:.+}")
 	@ResponseBody
 	public ResponseEntity<Resource> getFile(@PathVariable String filename) {
+		Resource file = cabinetService.loadFile(filename);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")
+				.body(file);
+	}
+	
+	//method to get one pic
+	@GetMapping("/pic/{filename:.+}")
+	@ResponseBody
+	public ResponseEntity<Resource> getPic(@PathVariable String filename) {
 		Resource file = cabinetService.loadFile(filename);
 		return ResponseEntity.ok()
 				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"")

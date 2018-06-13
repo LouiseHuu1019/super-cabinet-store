@@ -1,8 +1,8 @@
 package com.backend.supercabinetstore.dao;
 
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import com.backend.supercabinetstore.bean.Order;
 
-@Repository
-public class OrderDao {
-
+public interface OrderDao extends JpaRepository<Order, Integer> {
+	
 }

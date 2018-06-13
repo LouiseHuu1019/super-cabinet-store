@@ -1,12 +1,15 @@
 package com.backend.supercabinetstore.bean;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -16,6 +19,7 @@ public class Order {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO, generator = "SEQ")
 	@SequenceGenerator(name = "SEQ", sequenceName = "ord_SEQ")
+	@Column(name = "orders_id")
 	private int id;
 	
 	@Column(name = "orderNum", nullable = false)
@@ -42,8 +46,8 @@ public class Order {
 	@Column(name = "email", nullable = false)
 	private String email;
 	
-	@Column(name = "cab")
-	private Cabinets[] cab;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "orders")
+	private List<Buy_cab> cab = new ArrayList<>();
 
 	public int getId() {
 		return id;
@@ -117,16 +121,17 @@ public class Order {
 		this.email = email;
 	}
 
-	public Cabinets[] getCab() {
+	
+	public List<Buy_cab> getCab() {
 		return cab;
 	}
 
-	public void setCab(Cabinets[] cab) {
+	public void setCab(List<Buy_cab> cab) {
 		this.cab = cab;
 	}
 
 	public Order(int id, String orderNum, double ord_price, String first_name, String last_name, String address,
-			int zip, String phone, String email, Cabinets[] cab) {
+			int zip, String phone, String email, List<Buy_cab> cab) {
 		super();
 		this.id = id;
 		this.orderNum = orderNum;
@@ -148,7 +153,7 @@ public class Order {
 	public String toString() {
 		return "Order [id=" + id + ", orderNum=" + orderNum + ", ord_price=" + ord_price + ", first_name=" + first_name
 				+ ", last_name=" + last_name + ", address=" + address + ", zip=" + zip + ", phone=" + phone + ", email="
-				+ email + ", cab=" + Arrays.toString(cab) + "]";
+				+ email + ", cab=" + cab + "]";
 	}
 	
 }
