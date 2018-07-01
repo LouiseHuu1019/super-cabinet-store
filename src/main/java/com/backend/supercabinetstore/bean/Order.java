@@ -13,6 +13,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -46,6 +48,7 @@ public class Order {
 	@Column(name = "email", nullable = false)
 	private String email;
 	
+	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "orders")
 	private List<Buy_cab> cab = new ArrayList<>();
 

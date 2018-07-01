@@ -36,6 +36,16 @@ public class UserService {
 		return new Response(true);
 	}
 	
+	public Response registerAdm(User user) {
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		List<UserProfile> profiles = new ArrayList<UserProfile>();
+		profiles.add(new UserProfile(1));
+		user.setProfiles(profiles);
+		System.out.println(user);
+		userDao.save(user);
+		return new Response(true);
+	}
+	
 	public Response changePassword(User user, Authentication authentication) {
 		if(user.getUsername().equals(authentication.getName()) || isAdmin(authentication.getAuthorities())) {
 			User u = userDao.findByUsername(user.getUsername());
