@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.backend.supercabinetstore.bean.Order;
+import com.backend.supercabinetstore.dao.BuyCabDao;
 import com.backend.supercabinetstore.dao.OrderDao;
 import com.backend.supercabinetstore.http.Response;
 import com.backend.supercabinetstore.service.OrderService;
@@ -22,6 +23,9 @@ public class OrderController {
 	
 	@Autowired
 	OrderDao orderDao;
+	
+	@Autowired
+	BuyCabDao buyCabDao;
 	
 	@PostMapping("/order")
 	public Response addOrder(@RequestBody Order order) {
@@ -37,8 +41,9 @@ public class OrderController {
 //	@DeleteMapping("/order/{id}")
 	@Transactional
 	@DeleteMapping("/order/{orderNum}")
-	public Response deleteTheOrder(@PathVariable String orderNum) {
-		orderDao.deleteByorderNum(orderNum);
+	public Response deleteTheOrder(@PathVariable int orderNum) {
+		buyCabDao.deleteByorders_id(orderNum);
+		orderDao.deleteByid(orderNum);
 		return new Response(true);
 	}
 }

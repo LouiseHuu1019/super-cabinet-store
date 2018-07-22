@@ -11,6 +11,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name = "BUY_CAB")
 public class Buy_cab {
@@ -19,6 +21,7 @@ public class Buy_cab {
 	@SequenceGenerator(name = "SEQ", sequenceName = "BUYCAB_SEQ")
 	private int buy_cab_id;
 	
+	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "orders_id")
 	private Order orders;

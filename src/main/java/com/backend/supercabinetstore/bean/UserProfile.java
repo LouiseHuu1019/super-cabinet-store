@@ -17,15 +17,6 @@ public class UserProfile implements GrantedAuthority {
 	@Column
 	private String type;
 
-	public UserProfile() {
-		super();
-	}
-
-	public UserProfile(int id) {
-		super();
-		this.id = id;
-	}
-
 	public int getId() {
 		return id;
 	}
@@ -52,4 +43,21 @@ public class UserProfile implements GrantedAuthority {
 		return type;
 	}
 
+	public UserProfile(int id, String type) {
+		super();
+		this.id = id;
+		this.type = type;
+	}
+
+	public UserProfile() {
+		super();
+	}
+
+	public UserProfile(int id) {
+		super();
+		this.id = id;
+	}
+
+	
+	
 }

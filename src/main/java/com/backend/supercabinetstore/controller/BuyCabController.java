@@ -23,6 +23,11 @@ public class BuyCabController {
 		return buyCabDao.findByorders_id(orderNum);
 	}
 	
+	@GetMapping("/buycabs")
+	public List<Buy_cab> getAllCabs() {
+		return buyCabDao.findAll();
+	}
+	
 	@Transactional
 	@DeleteMapping("/buycabs/{orderNum}")
 	public Response deleteTheCabs(@PathVariable int orderNum) {

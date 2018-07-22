@@ -5,5 +5,5 @@ import com.backend.supercabinetstore.bean.Order;
 
 public interface OrderDao extends JpaRepository<Order, Integer> {
 	
-	void deleteByorderNum(String id);
+	void deleteByid(int id);
 }
