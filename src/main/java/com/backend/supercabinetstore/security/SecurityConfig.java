@@ -46,17 +46,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
     protected void configure(HttpSecurity http) throws Exception {
-//		.csrf()
-//    	.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-//    	.and()
+
         http.csrf().disable()
         		.cors() // cors config.
         			.and()
             .authorizeRequests()
             	.antMatchers("/index.html", "/products", "/products/*").permitAll()
-//                .antMatchers("/index.html", "/products", "/products/*").permitAll()
-//                .antMatchers("/orders", "/orders/*").hasAnyRole("USER", "ADMIN")
-//                .antMatchers("/users", "/users/*").hasAnyRole("ADMIN")
                 .and()
             .exceptionHandling().authenticationEntryPoint(authenticationEntryPointImpl)
                 .and()
@@ -83,7 +78,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Bean
     CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOrigin("*"); // You should only set trusted site here. e.g. http://localhost:4200 means only this site can access.
+        configuration.addAllowedOrigin("http://localhost:4200"); // You should only set trusted site here. e.g. http://localhost:4200 means only this site can access.
         configuration.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","HEAD","OPTIONS"));
         configuration.addAllowedHeader("*");
         configuration.setAllowCredentials(true);
