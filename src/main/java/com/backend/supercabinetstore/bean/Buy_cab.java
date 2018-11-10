@@ -88,10 +88,4 @@ public class Buy_cab {
 	public String toString() {
 		return "Buy_cab [buy_cab_id=" + buy_cab_id + ", orders=" + orders + ", cab_id=" + cab_id + ", cnt=" + cnt + "]";
 	}
-
-
-
-
-	
-	
 }

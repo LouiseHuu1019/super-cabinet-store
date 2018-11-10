@@ -30,7 +30,7 @@ public class CabinetService {
 	CabinetDao cabinetDao;
 
 	Logger log = LoggerFactory.getLogger(this.getClass().getName());
-	private final Path rootLocation = Paths.get("/home/ec2-user/pics");
+	private final Path rootLocation = Paths.get("pics");
 	
 	public List<Cabinets> getCabinetsList() {
 		return cabinetDao.findAll();
